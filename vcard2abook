@@ -31,3 +31,10 @@ cat tmp2 | sed 's/EMAIL;\S\+:\(\S\+\)/email=\1<EMAIL_END>/g' > tmp3
 # Clean up between <NAME_END> and "email="
 cat tmp3 | sed 's/\(<NAME_END>\)\S\+ \(.\+\)/\1\2/g' > tmp4
 
+
+# Remove multiple "email=" markers
+# People with more than one email address have multiple "email=" marker, but
+# they should just have one and the email addresses should be separated by a
+# ",".
+cat tmp4 | sed 's/<EMAIL_END> email=/,/g' > tmp5
+
