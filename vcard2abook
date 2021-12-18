@@ -38,3 +38,7 @@ cat tmp3 | sed 's/\(<NAME_END>\)\S\+ \(.\+\)/\1\2/g' > tmp4
 # ",".
 cat tmp4 | sed 's/<EMAIL_END> email=/,/g' > tmp5
 
+
+# Remove stuff after the <EMAIL_END> marker.
+cat tmp5 | sed 's/\(<EMAIL_END>\).\+/\1/g' > tmp6
+
