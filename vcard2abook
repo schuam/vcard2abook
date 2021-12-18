@@ -20,6 +20,7 @@ echo ""                         >> tmp01
 # some EMAIL lines start like that as well.
 cat $1 | sed 's/^item[0-9]\+\.//' > tmp02
 
+
 # Put every vcard object on one line.
 cat tmp02 | tr '\n' ' ' | sed 's/BEGIN:VCARD //g; s/END:VCARD /\n/g' > tmp03
 
@@ -27,6 +28,7 @@ cat tmp02 | tr '\n' ' ' | sed 's/BEGIN:VCARD //g; s/END:VCARD /\n/g' > tmp03
 # Remove lines without a (vcard) EMAIL tag as they are not interesting for an
 # addressbook that is used for Neomutt.
 cat tmp03 | sed -n '/EMAIL/p' > tmp04
+
 
 # Look for the (vcard) FN tag and replace it with "name=".
 # Remove everything before FN, but leave the rest of the line alone.
@@ -37,15 +39,15 @@ cat tmp04 | sed 's/.\+ FN:\(.\+\) \(\S\?\S:.\+\)/name=\1<NAME_END>\2/g' > tmp05
 cat tmp05 | sed 's/EMAIL;\S\+:\(\S\+\)/email=\1<EMAIL_END>/g' > tmp06
 
 
-# Clean up between <NAME_END> and "email=".
-cat tmp06 | sed 's/\(<NAME_END>\)\S\+ \(.\+\)/\1\2/g' > tmp07
-
-
 # Remove multiple "email=" markers.
 # People with more than one email address have multiple "email=" marker, but
 # they should just have one and the email addresses should be separated by a
 # ",".
-cat tmp07 | sed 's/<EMAIL_END> email=/,/g' > tmp08
+cat tmp06 | sed 's/<EMAIL_END> email=/,/g' > tmp07
+
+
+# Clean up between <NAME_END> and "email=".
+cat tmp07 | sed 's/\(<NAME_END>\).\+email=/\1/g' > tmp08
 
 
 # Remove stuff after the <EMAIL_END> marker.
