@@ -10,3 +10,7 @@ echo "version=0.6.1"            >> $2
 echo ""                         >> $2
 echo ""                         >> $2
 
+
+# Put every vcard object on one line
+cat $1 | tr '\n' ' ' | sed 's/BEGIN:VCARD //g; s/END:VCARD /\n/g' > tmp1
+
