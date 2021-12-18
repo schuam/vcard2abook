@@ -25,5 +25,9 @@ cat tmpX | sed 's/.\+ FN:\(.\+\) \(\S\?\S:.\+\)/name=\1<NAME_END>\2/g' > tmp2
 
 
 # Look for the (vcard) EMAIL tag and replace it with "email="
-cat tmp2 | sed 's/EMAIL;\S\+:\(\S\+\)/email=\1<EMAIL_END>/g'
+cat tmp2 | sed 's/EMAIL;\S\+:\(\S\+\)/email=\1<EMAIL_END>/g' > tmp3
+
+
+# Clean up between <NAME_END> and "email="
+cat tmp3 | sed 's/\(<NAME_END>\)\S\+ \(.\+\)/\1\2/g' > tmp4
 
