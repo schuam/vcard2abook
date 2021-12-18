@@ -2,13 +2,13 @@
 
 
 # Insert prolog into the output file
-echo "# abook addressbook file" > $2
-echo ""                         >> $2
-echo "[format]"                 >> $2
-echo "program=abook"            >> $2
-echo "version=0.6.1"            >> $2
-echo ""                         >> $2
-echo ""                         >> $2
+echo "# abook addressbook file" > tmpA
+echo ""                         >> tmpA
+echo "[format]"                 >> tmpA
+echo "program=abook"            >> tmpA
+echo "version=0.6.1"            >> tmpA
+echo ""                         >> tmpA
+echo ""                         >> tmpA
 
 
 # Remove "item[0-9]\." from the beginning of lines.
@@ -53,4 +53,8 @@ cat tmp6 | sed '=' \
          | sed -e 's/^\([0-9]\+\)/[\1]/' \
                -e 's/<NAME_END>/\n/' \
                -e 's/<EMAIL_END>/\n/' > tmp7
+
+
+# Concatenate the beginning of the file with the contacts
+cat tmpA tmp7 > $2
 
