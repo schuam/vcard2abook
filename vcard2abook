@@ -14,7 +14,12 @@ echo ""                         >> $2
 # Put every vcard object on one line
 cat $1 | tr '\n' ' ' | sed 's/BEGIN:VCARD //g; s/END:VCARD /\n/g' > tmp1
 
+
 # Look for the (vcard) FN tag and replace it with "name="
 # Remove everything before FN, but leave the rest of the line alone.
-cat tmp1 | sed 's/.\+ FN:\(.\+\) \(\S\?\S:.\+\)/name=\1<NAME_END>\2/g'
+cat tmp1 | sed 's/.\+ FN:\(.\+\) \(\S\?\S:.\+\)/name=\1<NAME_END>\2/g' > tmp2
+
+
+# Look for the (vcard) EMAIL tag and replace it with "email="
+cat tmp2 | sed 's/EMAIL;\S\+:\(\S\+\)/email=\1<EMAIL_END>/g'
 
