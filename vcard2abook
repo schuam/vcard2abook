@@ -11,8 +11,13 @@ echo ""                         >> $2
 echo ""                         >> $2
 
 
+# Remove "item[0-9]\." from the beginning of lines.
+# For some reason some lines start like that. It has to be removed, because
+# some EMAIL lines start like taht as well.
+cat $1 | sed 's/^item[0-9]\+\.//' > tmp0
+
 # Put every vcard object on one line
-cat $1 | tr '\n' ' ' | sed 's/BEGIN:VCARD //g; s/END:VCARD /\n/g' > tmp1
+cat tmp0 | tr '\n' ' ' | sed 's/BEGIN:VCARD //g; s/END:VCARD /\n/g' > tmp1
 
 
 # Remove lines without a (vcard) EMAIL tag as they are not interesting for an
