@@ -47,3 +47,10 @@ cat tmp4 | sed 's/<EMAIL_END> email=/,/g' > tmp5
 # Remove stuff after the <EMAIL_END> marker.
 cat tmp5 | sed 's/\(<EMAIL_END>\).\+/\1/g' > tmp6
 
+
+# Split up the contacts into the abook format
+cat tmp6 | sed '=' \
+         | sed -e 's/^\([0-9]\+\)/[\1]/' \
+               -e 's/<NAME_END>/\n/' \
+               -e 's/<EMAIL_END>/\n/' > tmp7
+
