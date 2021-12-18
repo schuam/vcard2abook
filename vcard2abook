@@ -58,3 +58,7 @@ cat tmp6 | sed '=' \
 # Concatenate the beginning of the file with the contacts
 cat tmpA tmp7 > $2
 
+
+# Clean up (remove all the tmp files)
+rm tmp*
+
