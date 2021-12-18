@@ -1,6 +1,10 @@
 #! /usr/bin/bash
 
 
+# Change line endings to unix style.
+dos2unix -q $1
+
+
 # Insert prolog into the output file
 echo "# abook addressbook file" > tmp01
 echo ""                         >> tmp01
