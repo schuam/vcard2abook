@@ -1,0 +1,12 @@
+#! /usr/bin/bash
+
+
+# Insert prolog into the output file
+echo "# abook addressbook file" > $2
+echo ""                         >> $2
+echo "[format]"                 >> $2
+echo "program=abook"            >> $2
+echo "version=0.6.1"            >> $2
+echo ""                         >> $2
+echo ""                         >> $2
+
