@@ -53,3 +53,7 @@ email=erika.mustermann@example.com
 contacts. All the other information is not needed in Neomutt. Therefore
 everything else is discarded.
 
+**Note:** I don't know if using **sed** this extensively is the best way to
+solve the problem I wanted to solve, but I wanted to practice my **sed**
+skills.
+
