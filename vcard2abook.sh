@@ -29,11 +29,9 @@ cat tmp02 | tr '\n' ' ' | sed 's/BEGIN:VCARD //g; s/END:VCARD /\n/g' > tmp03
 # addressbook that is used for Neomutt.
 cat tmp03 | sed -n '/EMAIL/p' > tmp04
 
-
 # Look for the (vcard) FN tag and replace it with "name=".
 # Remove everything before FN, but leave the rest of the line alone.
-cat tmp04 | sed 's/.\+ FN:\(.\+\) \(\S\?\S:.\+\)/name=\1<NAME_END>\2/g' > tmp05
-
+cat tmp04 | sed -E 's/.*N:([^;]+);([^;]+);/name=\2 \1<NAME_END>/g' > tmp05
 
 # Look for the (vcard) EMAIL tag and replace it with "email=".
 cat tmp05 | sed 's/EMAIL;\S\+:\(\S\+\)/email=\1<EMAIL_END>/g' > tmp06
@@ -61,8 +59,13 @@ cat tmp09 | sed '=' \
                 -e 's/<EMAIL_END>/\n/' > tmp10
 
 
+# Remove double space (they sometimes appear, because sometime there is an
+# extra space after the first name in the vcard file.
+
+cat tmp10 | sed -e 's/  / /g' > tmp11
+
 # Concatenate the beginning of the file with the contacts.
-cat tmp01 tmp10 > $2
+cat tmp01 tmp11 > $2
 
 
 # Clean up (remove all the tmp files).
